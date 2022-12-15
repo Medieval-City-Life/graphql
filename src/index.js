@@ -1,4 +1,5 @@
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require('apollo-server-lambda');
+import https from 'https'
 const dotenv = require('dotenv');
 // const simpleNodeLogger = require('simple-node-logger');
 
@@ -31,6 +32,7 @@ const apolloServer = new ApolloServer({
   cors: true,
   typeDefs,
   resolvers,
+  mocks: true,
   context: auth,
   introspection: true,
   tracing, // only true for local development
@@ -38,8 +40,10 @@ const apolloServer = new ApolloServer({
   debug,
 });
 
-apolloServer.listen({ port }).then(({ url, server }) => {
-  /*server.keepAliveTimeout = 65000;
-  server.headersTimeout = 66000;*/
-  console.log(`🚀 Server ready at ${url}`);
-});
+exports.handler = apolloServer.createHandler();
+
+// apolloServer.listen({ port }).then(({ url, server }) => {
+//   /*server.keepAliveTimeout = 65000;
+//   server.headersTimeout = 66000;*/
+//   console.log(`🚀 Server ready at ${url}`);
+// });

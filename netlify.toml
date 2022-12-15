@@ -1,0 +1,5 @@
+[build]
+  command = "yarn"
+  functions = ""
+  publish = "static"
+  node_bundler = "esbuild"
