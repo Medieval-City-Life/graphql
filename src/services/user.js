@@ -112,24 +112,28 @@ exports.createUser = async (name, email, password) => {
   if (!validator.isLength(name, { min: 4, max: 30 }))
     return {
       success: false,
+      msg: 'Name must be between 4 and 30 characters.',
       code: 1, // Username min 4 max 30
     };
 
   if (!validator.isAlphanumeric(name))
     return {
       success: false,
+      msg: 'Special characters not allowed.',
       code: 2, // Not valid name
     };
 
   if (!validator.isEmail(email))
     return {
       success: false,
+      msg: 'No valid email.',
       code: 3, // Not valid email
     };
 
   if (!validator.isLength(password, { min: 6, max: 30 }))
     return {
       success: false,
+      msg: 'Passwort must be between 4 and 30 characters.',
       code: 4, // Password min 6 max 30
     };
 
@@ -147,6 +151,7 @@ exports.createUser = async (name, email, password) => {
   if (existsEmail)
     return {
       success: false,
+      msg: 'Email already taken.',
       code: 6, // Email already exists
     };
 
