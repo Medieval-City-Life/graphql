@@ -1,5 +1,5 @@
 [build]
-  command = "yarn"
+  command = "npm i"
   functions = "src"
   publish = "static"
   node_bundler = "esbuild"
