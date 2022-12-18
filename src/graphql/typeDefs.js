@@ -22,6 +22,22 @@ const typeDefs = `
     code: Int
     msg: String
   }
+
+  type Skills {
+    logging: Int
+    farming: Int
+  }
+
+  type itemDef {
+    name: String
+    category: String
+  }
+
+  type PlayerInventory {
+    itemDef: itemDef
+    amount: Int
+  }
+
   
   type User {
     _id: ID!
@@ -34,6 +50,7 @@ const typeDefs = `
     isActivated: Boolean
     languages: [String]
     wrongLoginCount: Int
+    skills: Skills
     deleted: Boolean
     createdAt: Date
     updatedAt: Date
@@ -43,6 +60,7 @@ const typeDefs = `
   type Query {
     users(sorting: Sorting, pagination: Pagination = ${defaultPagination}, filter: Filter): [User]
     myUser: User
+    getInventory: [PlayerInventory]
   }
   
   type Mutation {

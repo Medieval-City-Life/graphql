@@ -3,9 +3,12 @@ const randomstring = require('randomstring');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 
+const Item = require('../models/Item');
 const User = require('../models/User');
 const Token = require('../models/Token');
 const ErrorHandling = require('../utils/errorHandling');
+
+const items = require('../utils/items.json');
 
 exports.getUsers = (pagination, sorting, filter) => {
   const filters = {};
@@ -176,6 +179,24 @@ exports.createUser = async (name, email, password) => {
       email,
     }),
   );
+
+  await Item.create([
+    {
+      user,
+      itemDef: '639f8af7fcd58d299809ce12',
+      amount: 10
+    },
+    {
+      user,
+      itemDef: '639f8af7fcd58d299809ce13',
+      amount: 10
+    },
+    {
+      user,
+      itemDef: '639f8af7fcd58d299809ce14',
+      amount: 10
+    }
+  ])
 
   return {
     success: !!user,

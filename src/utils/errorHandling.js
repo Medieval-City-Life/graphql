@@ -1,7 +1,7 @@
 // const Sentry = require('@sentry/node');
 
 exports.handleError = (err, data = null, throwError = false) => {
-  // console.log(err.message);
+  console.log(err.message);
   // const errorToHandle = new Error(err.message);
   return {
     code: 1,

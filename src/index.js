@@ -43,3 +43,27 @@ apolloServer.listen({ port }).then(({ url, server }) => {
   server.headersTimeout = 66000;*/
   console.log(`🚀 Server ready at ${url}`);
 });
+
+// const Item = require('./models/ItemDef')
+
+// const createItems = async () => {
+//   console.log('test');
+//     const res = await Item.create(
+//       {
+//         name: 'water',
+//         category: 'food'
+//       },
+//       {
+//         name: 'apple',
+//         category: 'food'
+//       },
+//       {
+//         name: 'wood',
+//         category: 'foresting'
+//       }
+//     )  
+
+//     console.log(res);
+// }
+
+// createItems();

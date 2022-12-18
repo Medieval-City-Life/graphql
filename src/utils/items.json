@@ -1,0 +1,5 @@
+{
+  "apple": { "name": "apple", "category": "food" },
+  "water": { "name": "apple", "category": "food" },
+  "wood": { "name": "wood", "category": "foresting" }
+}

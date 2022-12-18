@@ -13,7 +13,6 @@ const mutations = {
     return UserService.createUser(name, email, password);
   },
   loginUser: (_, { name, password, platform }) => {
-    console.log(name, password);
     return UserService.loginUser(name, password, platform);
   },
 };
