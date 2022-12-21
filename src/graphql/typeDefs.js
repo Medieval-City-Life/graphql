@@ -31,13 +31,13 @@ const typeDefs = `
   type itemDef {
     name: String
     category: String
+    img: String
   }
 
   type PlayerInventory {
     itemDef: itemDef
     amount: Int
   }
-
   
   type User {
     _id: ID!
@@ -51,21 +51,33 @@ const typeDefs = `
     languages: [String]
     wrongLoginCount: Int
     skills: Skills
+    community: ID
     deleted: Boolean
     createdAt: Date
     updatedAt: Date
     deletedAt: Date
+  }
+
+  type Community {
+    name: String
+    crest: String
+    owner: User
+    level: Int
+    memberCount: Int
+    createdAt: Date
   }
   
   type Query {
     users(sorting: Sorting, pagination: Pagination = ${defaultPagination}, filter: Filter): [User]
     myUser: User
     getInventory: [PlayerInventory]
+    getMyCommunity: Community
   }
   
   type Mutation {
     createUser(name: String!, email: String!, password: String!): SuccessErrorResponse
     loginUser(name: String!, password: String!, platform: String!): SuccessErrorResponse
+    createCommunity(name: String!, crest: String!): SuccessErrorResponse
   }
 `;
 

@@ -1,5 +1,7 @@
-const UserService = require('../services/user');
 const ErrorHandling = require('../utils/errorHandling');
+
+const UserService = require('../services/user');
+const CommunityService = require('../services/community');
 
 const mutations = {
   createUser: (_, { name, email, password }) => {
@@ -14,6 +16,9 @@ const mutations = {
   },
   loginUser: (_, { name, password, platform }) => {
     return UserService.loginUser(name, password, platform);
+  },
+  createCommunity: (_, { name, crest }, context) => {
+    return CommunityService.createCommunity(name, crest, context.user);
   },
 };
 

@@ -4,8 +4,9 @@ const mongoose = require('mongoose'),
 
 const itemDefSchema = new Schema(
   {
-    name: { type: String },
-    category: { type: String },
+    name: String,
+    category: String,
+    img: String
   }
 );
 

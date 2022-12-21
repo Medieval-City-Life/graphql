@@ -1,6 +1,8 @@
+const ErrorHandling = require('../utils/errorHandling');
+
 const UserService = require('../services/user');
 const InventoryService = require('../services/inventory');
-const ErrorHandling = require('../utils/errorHandling');
+const CommunityService = require('../services/community');
 
 const queries = {
   users: (_, { sorting, pagination, filter }) => {
@@ -23,6 +25,15 @@ const queries = {
       });
 
     return InventoryService.getInventory(context.user);
+  },
+  getMyCommunity: (_, args, context) => {
+    if (!context.user)
+      ErrorHandling.handleError('No user context', {
+        method: 'getMyCommunity',
+        context,
+      });
+
+    return CommunityService.getMyCommunity(context.user);
   },
 };
 

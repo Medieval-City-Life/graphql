@@ -1,48 +1,98 @@
-const { ApolloServer } = require('apollo-server');
+const express = require('express');
+const fs = require('fs');
+const https = require('https');
+const http = require('http');
+
+const { ApolloServer } = require('apollo-server-express');
 const dotenv = require('dotenv');
-// const simpleNodeLogger = require('simple-node-logger');
 
 const auth = require('./middleware/authentification');
 const functions = require('./utils/functions');
 
 dotenv.config();
 
-//create a rolling file logger based on date/time that fires process events
-/*const opts = {
-  errorEventName: 'error',
-  logDirectory: './logs', // NOTE: folder must exist and be writable...
-  fileNamePattern: 'roll-<DATE>.log',
-  dateFormat: 'YYYY.MM.DD',
-};*/
-// global.log = simpleNodeLogger.createRollingFileLogger(opts);
-
-// Get the default connection
 functions.connectToDatabase();
-
-const port = process.env.APP_PORT;
 
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
 
-const tracing = true,
-  debug = true;
+const tracing = true, debug = true;
 
-const apolloServer = new ApolloServer({
-  cors: true,
-  typeDefs,
-  resolvers,
-  context: auth,
-  introspection: true,
-  tracing, // only true for local development
-  playground: false,
-  debug,
-});
+async function startApolloServer() {
+  const configurations = {
+    // Note: You may need sudo to run on port 443
+    production: { ssl: true, port: 443, hostname: 'trade-of-kings.com' },
+    development: { ssl: false, port: 4000, hostname: 'localhost' },
+  };
 
-apolloServer.listen({ port }).then(({ url, server }) => {
-  /*server.keepAliveTimeout = 65000;
-  server.headersTimeout = 66000;*/
-  console.log(`🚀 Server ready at ${url}`);
-});
+  const environment = process.env.APP_ENV || 'development';
+  const config = configurations[environment];
+
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: auth,
+    introspection: true,
+    tracing, // only true for local development
+    playground: false,
+    debug,
+  });
+  await server.start();
+
+  const app = express();
+  server.applyMiddleware({ app });
+
+  // Create the HTTPS or HTTP server, per configuration
+  let httpServer;
+  if (config.ssl) {
+    // Assumes certificates are in a .ssl folder off of the package root.
+    // Make sure these files are secured.
+    httpServer = https.createServer(
+      {
+        key: fs.readFileSync(`../ssl/production/server.key`),
+        cert: fs.readFileSync(`../ssl/production/server.crt`),
+      },
+      app,
+    );
+  } else {
+    httpServer = http.createServer(app);
+  }
+
+  console.log('server ready');
+  // await new Promise((resolve) => server.listen({ port: config.port }, resolve));
+  // console.log(
+  //   '🚀 Server ready at',
+  //   `http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${
+  //     server.graphqlPath
+  //   }`,
+  // );
+  // return { server, app };
+}
+
+startApolloServer();
+
+// const typeDefs = require('./graphql/typeDefs');
+// const resolvers = require('./graphql/resolvers');
+
+// const tracing = true,
+//   debug = true;
+
+// const apolloServer = new ApolloServer({
+//   cors: true,
+//   typeDefs,
+//   resolvers,
+//   context: auth,
+//   introspection: true,
+//   tracing, // only true for local development
+//   playground: false,
+//   debug,
+// });
+
+// apolloServer.listen({ port }).then(({ url, server }) => {
+//   /*server.keepAliveTimeout = 65000;
+//   server.headersTimeout = 66000;*/
+//   console.log(`🚀 Server ready at ${url}`);
+// });
 
 // const Item = require('./models/ItemDef')
 
@@ -61,7 +111,7 @@ apolloServer.listen({ port }).then(({ url, server }) => {
 //         name: 'wood',
 //         category: 'foresting'
 //       }
-//     )  
+//     )
 
 //     console.log(res);
 // }

@@ -4,6 +4,7 @@
   "description": "IM_backend",
   "main": "src/index.js",
   "scripts": {
+    "dev": "cls && node src/index.js",
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.15.0",
+    "apollo-server-express": "^3.11.1",
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.1.0",
