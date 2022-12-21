@@ -34,7 +34,7 @@ async function startApolloServer() {
     context: auth,
     introspection: true,
     tracing, // only true for local development
-    playground: false,
+    playground: true,
     debug,
   });
   await server.start();
