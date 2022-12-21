@@ -49,8 +49,8 @@ async function startApolloServer() {
     // Make sure these files are secured.
     httpServer = https.createServer(
       {
-        key: fs.readFileSync(`/etc/letsencrypt/live/trade-of-kings.com/privkey.pem`),
-        cert: fs.readFileSync(`/etc/letsencrypt/live/trade-of-kings.com/fullchain.pem`),
+        key: fs.readFileSync(`/etc/letsencrypt/live/api.trade-of-kings.com/privkey.pem`),
+        cert: fs.readFileSync(`/etc/letsencrypt/live/api.trade-of-kings.com/fullchain.pem`),
       },
       app,
     );
