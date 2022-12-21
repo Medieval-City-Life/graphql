@@ -21,7 +21,7 @@ const tracing = true, debug = true;
 async function startApolloServer() {
   const configurations = {
     // Note: You may need sudo to run on port 443
-    production: { ssl: true, port: 443, hostname: 'trade-of-kings.com' },
+    production: { ssl: true, port: 443, hostname: 'api.trade-of-kings.com' },
     development: { ssl: false, port: 4000, hostname: 'localhost' },
   };
 
