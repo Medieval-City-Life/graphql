@@ -23,7 +23,7 @@ const apolloServer = new ApolloServer({
   context: auth,
   introspection: true,
   tracing, // only true for local development
-  playground: true,
+  playground: false,
   debug,
 });
 
