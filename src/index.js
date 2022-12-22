@@ -17,7 +17,7 @@ const tracing = true,
   debug = true;
 
 const apolloServer = new ApolloServer({
-  cors: true,
+  cors: false,
   typeDefs,
   resolvers,
   context: auth,
