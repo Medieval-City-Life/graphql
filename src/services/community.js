@@ -1,5 +1,6 @@
 const Community = require('../models/Community');
 const User = require('../models/User');
+const Building = require('../models/Building');
 
 const createCommunity = async (name, crest, user) => {
   const community = await Community.findOne({ name });
@@ -15,6 +16,20 @@ const createCommunity = async (name, crest, user) => {
   await user.updateOne({
     community: comm
   });
+
+  await Building.create([
+    {
+      community: comm,
+      name: 'forest',
+      type: 'generating',
+      level: 0,
+      products: [{
+        itemDef: '639f8af7fcd58d299809ce14',
+        rate: 10,
+        last_collected: new Date()
+      }]
+    }
+  ])
 
   return { success: true }
 };

@@ -3,6 +3,7 @@ const ErrorHandling = require('../utils/errorHandling');
 const UserService = require('../services/user');
 const InventoryService = require('../services/inventory');
 const CommunityService = require('../services/community');
+const BuildingService = require('../services/building');
 
 const queries = {
   users: (_, { sorting, pagination, filter }) => {
@@ -34,6 +35,15 @@ const queries = {
       });
 
     return CommunityService.getMyCommunity(context.user);
+  },
+  getBuildings: (_, args, context) => {
+    if (!context.user)
+      ErrorHandling.handleError('No user context', {
+        method: 'getBuildings',
+        context,
+      });
+
+    return BuildingService.getBuildings(context.user);
   },
 };
 

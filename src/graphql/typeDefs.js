@@ -66,12 +66,27 @@ const typeDefs = `
     memberCount: Int
     createdAt: Date
   }
+
+  type Product {
+    itemDef: itemDef
+    rate: Int
+    last_collected: Date
+  }
+
+  type Building {
+    name: String
+    type: String
+    level: Int
+    owner: User
+    products: [Product]
+  }
   
   type Query {
     users(sorting: Sorting, pagination: Pagination = ${defaultPagination}, filter: Filter): [User]
     myUser: User
     getInventory: [PlayerInventory]
     getMyCommunity: Community
+    getBuildings: [Building]
   }
   
   type Mutation {
